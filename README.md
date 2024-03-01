@@ -34,3 +34,6 @@ We take into account 5 areas when evaluating a solution. Each criteria is evalua
 
 ## Submit your solution	
 Create a public Github repository and push your solution including any documentation you feel necessary. Commit often - we would rather see a history of trial and error than a single monolithic push. When you're finished, please send us the URL to the repository. 
+
+## Run Command
+docker run --name my_postgres -e POSTGRES_PASSWORD=my_password -d -p 5432:5432 postgres:latest
