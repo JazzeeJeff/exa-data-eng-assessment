@@ -51,10 +51,6 @@ def read_json_file(file_path):
 
 
 def normalize_nested_json(data):
-    # Use pandas json_normalize() to flatten the nested JSON data
-    # The 'record_path' parameter specifies the path to the nested records in the JSON
-    # The 'max_level' parameter limits the depth of normalization to level 2
-    # The 'sep' parameter is used to separate the column names when flattening nested dictionaries
     df = pd.json_normalize(data, record_path=["entry"], max_level=2, sep="_")
     return df
 
@@ -70,11 +66,8 @@ def get_fhir_json(directory: str) -> typing.List[typing.Dict]:
 
 
 def filter_dataframe_by_resource_type(dataframe: pandas.DataFrame) -> dict[Any, DataFrame]:
-    # dataframes_dict = {resource: dataframe[resource] for resource in RESOURCE_TYPES}
-    # create unique list of names
     resource_type = dataframe.resource_resourceType.unique()
 
-    # create a data frame dictionary to store your data frames
     df_dict_resource_types = {elem: pd.DataFrame() for elem in resource_type}
 
     for key in df_dict_resource_types.keys():
