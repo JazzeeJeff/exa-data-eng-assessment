@@ -74,20 +74,20 @@ def read_json_file(file_path):
     return fhir_data
 
 
-def normalize_nested_json(data: typing.List[typing.Dict]) -> pandas.DataFrame:
+def normalise_nested_json(data: typing.List[typing.Dict]) -> pandas.DataFrame:
     """
-    Normalize nested JSON data into a pandas DataFrame.
+    Normalise nested JSON data into a pandas DataFrame.
 
     Args:
-        data: Nested JSON data to be normalized.
+        data: Nested JSON data to be normalised.
 
     Returns:
-        pd.DataFrame: A pandas DataFrame containing the normalized data.
+        pd.DataFrame: A pandas DataFrame containing the normalised data.
 
     """
-    # Normalize the nested JSON data into a DataFrame
+    # Normalise the nested JSON data into a DataFrame
     # Using record_path=["entry"] to specify the path to the nested records
-    # Setting max_level=2 to control the depth of normalization
+    # Setting max_level=2 to control the depth of normalisation
     # Using sep="_" to separate nested keys in the resulting DataFrame
     df = pandas.json_normalize(data, record_path=["entry"], max_level=2, sep="_")
     return df
@@ -131,7 +131,7 @@ def filter_dataframe_by_resource_type(dataframe: pandas.DataFrame) -> list[typin
         dataframe (pd.DataFrame): The DataFrame to be filtered.
 
     Returns:
-        list[Dict[str, Any]]: A list of dictionaries where each dictionary contains
+        list[Dict[str, str]]: A list of dictionaries where each dictionary contains
         a DataFrame corresponding to a unique resource type.
 
     """
@@ -201,6 +201,7 @@ def create_tables(con, list_of_dictionaries: typing.List[typing.Dict], logger: l
 
                 # Print success message
                 print(f"Table '{resource_type}' created and data inserted successfully.")
+                logger.info(f"Table '{resource_type}' created and data inserted successfully.")
 
         # Close the cursor and connection
         cursor.close()
@@ -217,7 +218,7 @@ def process_fhir_json():
     fhir_json = get_fhir_json(directory=FHIR_JSON_DIRECTORY)
     if not fhir_json:
         raise ValueError("No json files received from directory.")
-    normalise_json_df = normalize_nested_json(fhir_json)
+    normalise_json_df = normalise_nested_json(fhir_json)
     filtered_df = filter_dataframe_by_resource_type(normalise_json_df)
     with contextlib.closing(
         create_con(dbname=DBNAME, user=USER, password=PASSWORD, host=HOST, port=PORT)
