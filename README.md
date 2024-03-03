@@ -19,5 +19,9 @@ python process_fhir_json.py
 To run the unittest, please run the following into the terminal.
 ```
 python process_fhir_json_test.py
+```
 
+To stop the docker process, run this command.
+```
+docker stop my_postgres
 ```
