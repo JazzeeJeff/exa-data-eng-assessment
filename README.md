@@ -8,7 +8,7 @@ The process takes a number of json fhir files. Process them into a normalised da
 ## Run Command
 With docker installed on your machine, run the following command to set up the container and postgres environment.
 ```
-docker run --name my_postgres -e POSTGRES_PASSWORD=my_password -d -p 5432:5432 postgres:latest
+docker run --name fhir_db -e POSTGRES_PASSWORD=my_password -d -p 5432:5432 postgres:13
 ```
 
 Now to run the script, please run the following in the terminal.
@@ -23,5 +23,5 @@ python process_fhir_json_test.py
 
 To stop the docker process, run this command.
 ```
-docker stop my_postgres
+docker stop fhir_db
 ```
